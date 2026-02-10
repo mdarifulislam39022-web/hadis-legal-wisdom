@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Author Dashboard - Hadi's Legal Wisdom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { color: #002147; border-bottom: 2px solid #ffd700; padding-bottom: 10px; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        #editor { height: 300px; margin-bottom: 20px; }
+        .publish-btn { background: #002147; color: white; border: none; padding: 15px 40px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1.1rem; }
+        .publish-btn:hover { background: #003366; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>নতুন আর্টিকেল লিখুন</h2>
+    <input type="text" id="postTitle" placeholder="আর্টিকেলের শিরোনাম (Title)">
+    
+    <select id="postCategory">
+        <option value="আইন আলোচনা">আইন আলোচনা</option>
+        <option value="উচ্চ আদালতের রায়">উচ্চ আদালতের রায়</option>
+        <option value="একাডেমিক নোট">একাডেমিক নোট</option>
+    </select>
+
+    <div id="editor"></div>
+
+    <button class="publish-btn" id="savePost">পাবলিশ করুন</button>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+    // আপনার ফায়ারবেস কনফিগ (নিশ্চিত করুন আপনার প্রজেক্টের কনফিগ এখানে আছে)
+    const firebaseConfig = {
+  apiKey: "AIzaSyCkAkwIWDVrI00Fe1qbCigBE3Q8xtZkMEg",
+  authDomain: "hadi-s-legal-wisdom.firebaseapp.com",
+  projectId: "hadi-s-legal-wisdom",
+  storageBucket: "hadi-s-legal-wisdom.firebasestorage.app",
+  messagingSenderId: "327761476284",
+  appId: "1:327761476284:web:c1f45355945703cf632eb9",
+  measurementId: "G-TJ3PWBTS1X"
+};
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Rich Text Editor সচল করা
+    var quill = new Quill('#editor', { theme: 'snow', placeholder: 'এখানে বিস্তারিত লিখুন...' });
+
+    let currentUser = null;
+    onAuthStateChanged(auth, (user) => {
+        if (user) { currentUser = user; } 
+        else { window.location.href = "login.html"; }
+    });
+
+    document.getElementById('savePost').addEventListener('click', async () => {
+        const title = document.getElementById('postTitle').value;
+        const category = document.getElementById('postCategory').value;
+        const content = quill.root.innerHTML;
+
+        if (!title || content === "<p><br></p>") {
+            alert("শিরোনাম এবং বিষয়বস্তু দুটিই প্রয়োজন!");
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "posts"), {
+                title: title,
+                category: category,
+                content: content,
+                authorUid: currentUser.uid,
+                authorEmail: currentUser.email,
+                createdAt: serverTimestamp()
+            });
+            alert("আর্টিকেলটি সফলভাবে পাবলিশ হয়েছে!");
+            window.location.reload();
+        } catch (error) {
+            console.error("Error: ", error);
+            alert("পাবলিশ করা সম্ভব হয়নি।");
+        }
+    });
+</script>
+
+</body>
+</html>
