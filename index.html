@@ -8,158 +8,149 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #002147; --accent: #ffd700; --bg: #f8fafc; --white: #ffffff; }
-        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; color: #333; }
         
-        /* Modern Hero Section */
+        /* Navigation */
+        nav { background: var(--primary); padding: 15px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--accent); }
+        .nav-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-container a { color: white; text-decoration: none; font-weight: 600; margin-left: 20px; }
+
+        /* Modern Hero & Countdown */
         .hero { 
-            background: linear-gradient(rgba(0, 33, 71, 0.9), rgba(0, 33, 71, 0.8)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(0, 33, 71, 0.85), rgba(0, 33, 71, 0.85)), url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
-            height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; padding: 0 20px; border-bottom: 6px solid var(--accent);
+            padding: 80px 20px; color: white; text-align: center;
         }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.5rem; opacity: 0.9; max-width: 700px; line-height: 1.6; }
+        .hero h1 { font-size: 3rem; margin: 0; }
+        
+        .countdown-box { margin-top: 30px; display: flex; justify-content: center; gap: 15px; }
+        .time-unit { background: var(--accent); color: var(--primary); padding: 15px; border-radius: 10px; min-width: 80px; }
+        .time-unit span { display: block; font-size: 2rem; font-weight: 700; }
+        .time-unit label { font-size: 0.8rem; font-weight: bold; }
 
-        /* Countdown Timer Section */
-        .countdown-container { 
-            background: var(--white); padding: 50px 20px; text-align: center;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.05); margin-top: -50px; border-radius: 20px 20px 0 0;
-            position: relative; z-index: 10;
-        }
-        .coming-soon-text { color: var(--primary); font-size: 2rem; font-weight: 700; margin-bottom: 30px; }
-        .timer { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .timer-box { 
-            background: var(--primary); color: var(--accent); padding: 20px; border-radius: 12px;
-            min-width: 100px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .timer-box span { display: block; font-size: 2.5rem; font-weight: 700; }
-        .timer-box label { font-size: 1rem; color: white; text-transform: uppercase; }
+        /* Main Section */
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 30px; }
+        
+        /* Post Cards */
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .post-card { background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; transition: 0.3s; border: 1px solid #eee; }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .post-body { padding: 25px; }
+        .category { color: #d97706; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+        .post-card h3 { color: var(--primary); margin: 10px 0; font-size: 1.4rem; }
+        .post-meta { font-size: 0.85rem; color: #666; margin-bottom: 15px; }
+        .read-more { display: inline-block; color: var(--primary); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--accent); }
 
-        /* Post Grid */
-        .container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
-        .section-title { text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 40px; position: relative; }
-        .section-title::after { content: ''; width: 80px; height: 4px; background: var(--accent); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
-
-        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .post-card { 
-            background: white; border-radius: 15px; overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.4s; border-bottom: 4px solid transparent;
-        }
-        .post-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .post-content { padding: 25px; }
-        .category-tag { background: #fef3c7; color: #92400e; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; }
-        .post-card h3 { color: var(--primary); margin: 15px 0; font-size: 1.4rem; line-height: 1.4; }
-        .post-meta { font-size: 0.85rem; color: #64748b; display: flex; align-items: center; gap: 10px; }
-
-        footer { background: var(--primary); color: white; text-align: center; padding: 50px 20px; margin-top: 80px; }
+        footer { background: var(--primary); color: white; text-align: center; padding: 40px; margin-top: 60px; }
     </style>
 </head>
 <body>
 
-    <div class="hero">
-        <h1>Hadi's Legal Wisdom</h1>
-        <p>"আইন ও ন্যায়বিচারের পথে একটি নির্ভীক যাত্রা। আমার বড় ভাই শহীদ ওসমান হাদি (Osman Hadi)-র স্মৃতির প্রতি বিনম্র শ্রদ্ধাঞ্জলি।"</p>
-    </div>
+    <nav>
+        <div class="nav-container">
+            <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent);">Hadi's Legal Wisdom</div>
+            <div>
+                <a href="index.html">হোম</a>
+                <a href="login.html">লগইন</a>
+            </div>
+        </div>
+    </nav>
 
-    <div class="countdown-container">
-        <div class="coming-soon-text">পূর্ণাঙ্গ লাইব্রেরি ও আর্কাইভ উন্মুক্ত হতে আর মাত্র...</div>
-        <div class="timer" id="countdown">
-            <div class="timer-box">
-                <span id="days">00</span>
-                <label>দিন</label>
-            </div>
-            <div class="timer-box">
-                <span id="hours">00</span>
-                <label>ঘণ্টা</label>
-            </div>
-            <div class="timer-box">
-                <span id="minutes">00</span>
-                <label>মিনিট</label>
-            </div>
-            <div class="timer-box">
-                <span id="seconds">00</span>
-                <label>সেকেন্ড</label>
-            </div>
+    <div class="hero">
+        <h1>শহীদ ওসমান হাদি স্মৃতি আর্কাইভ</h1>
+        <p>আইনের জ্ঞান ও ন্যায়বিচারের পথে আমাদের যাত্রা খুব শীঘ্রই পূর্ণতা পাচ্ছে।</p>
+        
+        <div class="countdown-box">
+            <div class="time-unit"><span id="days">00</span><label>দিন</label></div>
+            <div class="time-unit"><span id="hours">00</span><label>ঘণ্টা</label></div>
+            <div class="time-unit"><span id="minutes">00</span><label>মিনিট</label></div>
+            <div class="time-unit"><span id="seconds">00</span><label>সেকেন্ড</label></div>
         </div>
     </div>
 
     <div class="container">
-        <h2 class="section-title">সাম্প্রতিক আর্টিকেলসমূহ</h2>
+        <div class="section-header">
+            <h2 style="margin:0; color: var(--primary);">সাম্প্রতিক আর্টিকেলসমূহ</h2>
+        </div>
+        
         <div class="posts-grid" id="postsContainer">
-            </div>
+            <p style="text-align:center; grid-column: 1/-1; opacity:0.5;">পোস্ট লোড হচ্ছে...</p>
+        </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Hadi's Legal Wisdom | শহীদ ওসমান হাদি স্মৃতি আর্কাইভ</p>
-        <p style="opacity: 0.7; font-size: 0.9rem;">পরিকল্পনায় ও বাস্তবায়নে: মোহাম্মদ আরিফ</p>
+        <p>&copy; 2026 Hadi's Legal Wisdom | পরিকল্পিত ও বাস্তবায়িত: মোহাম্মদ আরিফ</p>
     </footer>
 
     <script type="module">
-        // --- ফায়ারবেস কনফিগ ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-     const firebaseConfig = {
-  apiKey: "AIzaSyCkAkwIWDVrI00Fe1qbCigBE3Q8xtZkMEg",
-  authDomain: "hadi-s-legal-wisdom.firebaseapp.com",
-  projectId: "hadi-s-legal-wisdom",
-  storageBucket: "hadi-s-legal-wisdom.firebasestorage.app",
-  messagingSenderId: "327761476284",
-  appId: "1:327761476284:web:c1f45355945703cf632eb9",
-  measurementId: "G-TJ3PWBTS1X"
-};
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "hadi-legal-wisdom.firebaseapp.com",
+            projectId: "hadi-legal-wisdom",
+            storageBucket: "hadi-legal-wisdom.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- পোস্ট লোড করার লজিক ---
+        // ফায়ারবেস থেকে পোস্ট লোড ফিচার
         const postsContainer = document.getElementById('postsContainer');
         const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
 
         onSnapshot(q, (snapshot) => {
             postsContainer.innerHTML = "";
-            snapshot.forEach((doc) => {
-                const post = doc.data();
-                const card = document.createElement('div');
-                card.className = 'post-card';
-                card.innerHTML = `
-                    <div class="post-content">
-                        <span class="category-tag">${post.category}</span>
-                        <h3>${post.title}</h3>
-                        <div class="post-meta">
-                            <i class="fas fa-calendar-alt"></i> ${new Date(post.createdAt?.seconds * 1000).toLocaleDateString('bn-BD')} | 
-                            <i class="fas fa-user"></i> ${post.authorEmail.split('@')[0]}
+            if (snapshot.empty) {
+                postsContainer.innerHTML = "<p style='text-align:center; grid-column:1/-1;'>এখনো কোনো পোস্ট নেই।</p>";
+                return;
+            }
+            snapshot.forEach((docSnap) => {
+                const post = docSnap.data();
+                const date = post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString('bn-BD') : "এখনই";
+                
+                const card = `
+                    <div class="post-card">
+                        <div class="post-body">
+                            <span class="category">${post.category}</span>
+                            <h3>${post.title}</h3>
+                            <div class="post-meta">
+                                <i class="far fa-calendar-alt"></i> ${date} | 
+                                <i class="far fa-user"></i> ${post.authorEmail.split('@')[0]}
+                            </div>
+                            <div style="margin-bottom:20px; color:#555; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                ${post.content}
+                            </div>
+                            <a href="#" class="read-more">বিস্তারিত পড়ুন</a>
                         </div>
                     </div>
                 `;
-                postsContainer.appendChild(card);
+                postsContainer.innerHTML += card;
             });
         });
 
-        // --- ৩০ দিনের কাউন্টডাউন টাইমার ---
-        const countdownDate = new Date();
-        countdownDate.setDate(countdownDate.getDate() + 30); // আজ থেকে ৩০ দিন পর
+        // ১ মাসের কাউন্টডাউন টাইমার ফিচার
+        const countToDate = new Date();
+        countToDate.setDate(countToDate.getDate() + 30);
 
-        const timerFunction = setInterval(() => {
+        setInterval(() => {
             const now = new Date().getTime();
-            const distance = countdownDate - now;
+            const gap = countToDate - now;
 
-            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
+            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((gap % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = d.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(timerFunction);
-                document.querySelector(".countdown-container").innerHTML = "<h2>আমরা এখন লাইভ!</h2>";
-            }
+            document.getElementById('days').innerText = d;
+            document.getElementById('hours').innerText = h;
+            document.getElementById('minutes').innerText = m;
+            document.getElementById('seconds').innerText = s;
         }, 1000);
     </script>
 </body>
 </html>
-
