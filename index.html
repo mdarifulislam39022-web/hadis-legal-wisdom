@@ -3,130 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hadi's Legal Wisdom - আইন ও রায় আর্কাইভ</title>
+    <title>Hadi's Legal Wisdom - আইনের আলোয় ন্যায়বিচার</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #002147; --accent: #ffd700; --bg: #f8fafc; }
-        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; color: #333; }
+        :root { --primary: #002147; --accent: #ffd700; --bg: #f8fafc; --white: #ffffff; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); margin: 0; color: #333; overflow-x: hidden; }
         
-        /* Header */
-        header { background: var(--primary); color: white; padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--accent); }
-        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
-        header p { margin-top: 10px; opacity: 0.9; font-style: italic; }
+        /* Modern Hero Section */
+        .hero { 
+            background: linear-gradient(rgba(0, 33, 71, 0.9), rgba(0, 33, 71, 0.8)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center;
+            height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding: 0 20px; border-bottom: 6px solid var(--accent);
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.5rem; opacity: 0.9; max-width: 700px; line-height: 1.6; }
 
-        /* Navigation */
-        nav { background: #fff; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        nav a { margin: 0 15px; text-decoration: none; color: var(--primary); font-weight: bold; transition: 0.3s; }
-        nav a:hover { color: #ccac00; }
+        /* Countdown Timer Section */
+        .countdown-container { 
+            background: var(--white); padding: 50px 20px; text-align: center;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.05); margin-top: -50px; border-radius: 20px 20px 0 0;
+            position: relative; z-index: 10;
+        }
+        .coming-soon-text { color: var(--primary); font-size: 2rem; font-weight: 700; margin-bottom: 30px; }
+        .timer { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .timer-box { 
+            background: var(--primary); color: var(--accent); padding: 20px; border-radius: 12px;
+            min-width: 100px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .timer-box span { display: block; font-size: 2.5rem; font-weight: 700; }
+        .timer-box label { font-size: 1rem; color: white; text-transform: uppercase; }
 
-        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        
-        /* Blog Card */
-        .post-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 6px solid var(--primary); transition: 0.3s; }
-        .post-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .category { background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: bold; }
-        .post-card h2 { color: var(--primary); margin: 15px 0 10px; font-size: 1.8rem; }
-        .meta { font-size: 0.9rem; color: #64748b; margin-bottom: 15px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
-        .content-preview { line-height: 1.7; color: #4b5563; }
-        
-        footer { background: var(--primary); color: white; text-align: center; padding: 30px; margin-top: 60px; }
+        /* Post Grid */
+        .container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+        .section-title { text-align: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 40px; position: relative; }
+        .section-title::after { content: ''; width: 80px; height: 4px; background: var(--accent); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .post-card { 
+            background: white; border-radius: 15px; overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.4s; border-bottom: 4px solid transparent;
+        }
+        .post-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .post-content { padding: 25px; }
+        .category-tag { background: #fef3c7; color: #92400e; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; }
+        .post-card h3 { color: var(--primary); margin: 15px 0; font-size: 1.4rem; line-height: 1.4; }
+        .post-meta { font-size: 0.85rem; color: #64748b; display: flex; align-items: center; gap: 10px; }
+
+        footer { background: var(--primary); color: white; text-align: center; padding: 50px 20px; margin-top: 80px; }
     </style>
 </head>
 <body>
 
-    <header>
+    <div class="hero">
         <h1>Hadi's Legal Wisdom</h1>
-        <p>আইনের আলোয় ন্যায়বিচারের পথে</p>
-    </header>
-
-    <nav>
-        <a href="index.html">হোম</a>
-        <a href="#আইন">আইন আলোচনা</a>
-        <a href="#রায়">রায়ের বিশ্লেষণ</a>
-        <a href="#নোট">একাডেমিক নোট</a>
-        <a href="login.html" style="color: #d97706;">লগইন</a>
-    </nav>
-
-    <div class="container" id="postsContainer">
-        <p style="text-align: center; opacity: 0.5;">পোস্টগুলো লোড হচ্ছে...</p>
+        <p>"আইন ও ন্যায়বিচারের পথে একটি নির্ভীক যাত্রা। আমার বড় ভাই শহীদ ওসমান হাদি (Osman Hadi)-র স্মৃতির প্রতি বিনম্র শ্রদ্ধাঞ্জলি।"</p>
     </div>
-<section style="background: white; padding: 60px 20px; border-top: 5px solid #ffd700;">
-    <div style="max-width: 900px; margin: 0 auto;">
-        
-        <div style="text-align: center; margin-bottom: 50px;">
-            <h2 style="color: #002147; font-size: 2.2rem; margin-bottom: 20px;">আমাদের সম্পর্কে</h2>
-            <p style="line-height: 1.8; color: #444; font-size: 1.1rem; text-align: justify;">
-                <strong>Hadi's Legal Wisdom</strong> একটি অলাভজনক আইনি সচেতনতামূলক প্ল্যাটফর্ম। এই উদ্যোগটি আমার পরম শ্রদ্ধেয় বড় ভাই <strong>শহীদ ওসমান হাদি (Osman Hadi)</strong>-র স্মৃতির প্রতি উৎসর্গ করা হয়েছে। আমাদের মূল লক্ষ্য হলো আইনের জটিল বিষয়গুলোকে সহজভাবে সাধারণ মানুষের কাছে পৌঁছে দেওয়া এবং শিক্ষার্থীদের জন্য একটি মানসম্মত আইনি আর্কাইভ তৈরি করা।
-            </p>
-        </div>
 
-        <div style="background: #fff9db; border: 1px dashed #fab005; padding: 30px; border-radius: 10px;">
-            <h3 style="color: #856404; margin-top: 0;"><i class="fas fa-exclamation-triangle"></i> আইনি সতর্কতা (Disclaimer)</h3>
-            <ul style="line-height: 1.7; color: #665c33; font-size: 0.95rem; padding-left: 20px;">
-                <li>এই ওয়েবসাইটে প্রকাশিত সকল তথ্য কেবল সাধারণ জ্ঞান এবং শিক্ষার উদ্দেশ্যে দেওয়া হয়েছে।</li>
-                <li>এখানে দেওয়া কোনো তথ্যই পেশাদার আইনি পরামর্শ (Professional Legal Advice) হিসেবে গণ্য হবে না।</li>
-                <li>নির্দিষ্ট কোনো আইনি সমস্যার জন্য অবশ্যই একজন নিবন্ধিত আইনজীবীর সাথে সরাসরি পরামর্শ করার অনুরোধ রইল।</li>
-                <li>এই ওয়েবসাইটের তথ্যের ওপর ভিত্তি করে গৃহীত কোনো সিদ্ধান্তের জন্য কর্তৃপক্ষ দায়ী থাকবে না।</li>
-            </ul>
+    <div class="countdown-container">
+        <div class="coming-soon-text">পূর্ণাঙ্গ লাইব্রেরি ও আর্কাইভ উন্মুক্ত হতে আর মাত্র...</div>
+        <div class="timer" id="countdown">
+            <div class="timer-box">
+                <span id="days">00</span>
+                <label>দিন</label>
+            </div>
+            <div class="timer-box">
+                <span id="hours">00</span>
+                <label>ঘণ্টা</label>
+            </div>
+            <div class="timer-box">
+                <span id="minutes">00</span>
+                <label>মিনিট</label>
+            </div>
+            <div class="timer-box">
+                <span id="seconds">00</span>
+                <label>সেকেন্ড</label>
+            </div>
         </div>
-
     </div>
-</section>
+
+    <div class="container">
+        <h2 class="section-title">সাম্প্রতিক আর্টিকেলসমূহ</h2>
+        <div class="posts-grid" id="postsContainer">
+            </div>
+    </div>
+
     <footer>
-        <p>&copy; 2026 Hadi's Legal Wisdom. সর্বস্বত্ব সংরক্ষিত।</p>
-        <small>পরিকল্পনায় ও বাস্তবায়নে: মোহাম্মদ আরিফ</small>
+        <p>&copy; 2026 Hadi's Legal Wisdom | শহীদ ওসমান হাদি স্মৃতি আর্কাইভ</p>
+        <p style="opacity: 0.7; font-size: 0.9rem;">পরিকল্পনায় ও বাস্তবায়নে: মোহাম্মদ আরিফ</p>
     </footer>
 
     <script type="module">
+        // --- ফায়ারবেস কনফিগ ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-        // আপনার ফায়ারবেস কনফিগ (আগের ফাইলের মতো এখানেও বসান)
         const firebaseConfig = {
-  apiKey: "AIzaSyCkAkwIWDVrI00Fe1qbCigBE3Q8xtZkMEg",
-  authDomain: "hadi-s-legal-wisdom.firebaseapp.com",
-  projectId: "hadi-s-legal-wisdom",
-  storageBucket: "hadi-s-legal-wisdom.firebasestorage.app",
-  messagingSenderId: "327761476284",
-  appId: "1:327761476284:web:c1f45355945703cf632eb9",
-  measurementId: "G-TJ3PWBTS1X"
-};
-
-    
+            apiKey: "YOUR_API_KEY",
+            authDomain: "hadi-legal-wisdom.firebaseapp.com",
+            projectId: "hadi-legal-wisdom",
+            storageBucket: "hadi-legal-wisdom.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const postsContainer = document.getElementById('postsContainer');
 
-        // রিয়েল-টাইমে পোস্ট লোড করা
+        // --- পোস্ট লোড করার লজিক ---
+        const postsContainer = document.getElementById('postsContainer');
         const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
 
         onSnapshot(q, (snapshot) => {
             postsContainer.innerHTML = "";
-            if (snapshot.empty) {
-                postsContainer.innerHTML = "<p style='text-align:center;'>এখনো কোনো পোস্ট করা হয়নি।</p>";
-                return;
-            }
-
             snapshot.forEach((doc) => {
                 const post = doc.data();
-                const date = post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString('bn-BD') : "এখনই";
-                
                 const card = document.createElement('div');
                 card.className = 'post-card';
                 card.innerHTML = `
-                    <span class="category">${post.category}</span>
-                    <h2>${post.title}</h2>
-                    <div class="meta">
-                        <i class="fas fa-user-edit"></i> ${post.authorEmail} | 
-                        <i class="fas fa-calendar-alt"></i> ${date}
+                    <div class="post-content">
+                        <span class="category-tag">${post.category}</span>
+                        <h3>${post.title}</h3>
+                        <div class="post-meta">
+                            <i class="fas fa-calendar-alt"></i> ${new Date(post.createdAt?.seconds * 1000).toLocaleDateString('bn-BD')} | 
+                            <i class="fas fa-user"></i> ${post.authorEmail.split('@')[0]}
+                        </div>
                     </div>
-                    <div class="content-preview">${post.content}</div>
                 `;
                 postsContainer.appendChild(card);
             });
         });
+
+        // --- ৩০ দিনের কাউন্টডাউন টাইমার ---
+        const countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 30); // আজ থেকে ৩০ দিন পর
+
+        const timerFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(timerFunction);
+                document.querySelector(".countdown-container").innerHTML = "<h2>আমরা এখন লাইভ!</h2>";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
