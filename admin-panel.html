@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Hadi's Legal Wisdom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #002147; --accent: #ffd700; --bg: #0f172a; }
+        body { font-family: 'Hind Siliguri', sans-serif; background: var(--bg); color: #fff; padding: 40px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); padding-bottom: 20px; margin-bottom: 30px; }
+        
+        .stat-card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid var(--accent); }
+        
+        .admin-table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .admin-table th, .admin-table td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .admin-table th { background: var(--primary); color: var(--accent); }
+        
+        .delete-btn { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .delete-btn:hover { background: #c0392b; }
+        .empty-msg { text-align: center; padding: 40px; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="admin-header">
+        <h2><i class="fas fa-user-shield"></i> সুপার অ্যাডমিন প্যানেল</h2>
+        <a href="index.html" style="color: var(--accent); text-decoration: none;">হোমপেইজে যান</a>
+    </div>
+
+    <div class="stat-card">
+        <h3>মোট পোস্ট সংখ্যা: <span id="totalPosts">0</span> টি</h3>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>শিরোনাম</th>
+                <th>ক্যাটাগরি</th>
+                <th>লেখক</th>
+                <th>অ্যাকশন</th>
+            </tr>
+        </thead>
+        <tbody id="adminTableBody">
+            <tr><td colspan="4" class="empty-msg">ডাটা লোড হচ্ছে...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyCkAkwIWDVrI00Fe1qbCigBE3Q8xtZkMEg",
+  authDomain: "hadi-s-legal-wisdom.firebaseapp.com",
+  projectId: "hadi-s-legal-wisdom",
+  storageBucket: "hadi-s-legal-wisdom.firebasestorage.app",
+  messagingSenderId: "327761476284",
+  appId: "1:327761476284:web:c1f45355945703cf632eb9",
+  measurementId: "G-TJ3PWBTS1X"
+};
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // রিয়েল-টাইমে সব পোস্ট লোড করা
+    onSnapshot(collection(db, "posts"), (snapshot) => {
+        const tableBody = document.getElementById('adminTableBody');
+        const totalPosts = document.getElementById('totalPosts');
+        tableBody.innerHTML = "";
+        totalPosts.innerText = snapshot.size;
+
+        if (snapshot.empty) {
+            tableBody.innerHTML = `<tr><td colspan="4" class="empty-msg">কোনো পোস্ট পাওয়া যায়নি।</td></tr>`;
+            return;
+        }
+
+        snapshot.forEach((docSnap) => {
+            const post = docSnap.data();
+            const id = docSnap.id;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${post.title}</td>
+                <td>${post.category}</td>
+                <td>${post.authorEmail}</td>
+                <td>
+                    <button class="delete-btn" onclick="removePost('${id}')">মুছে ফেলুন</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    });
+
+    // পোস্ট ডিলিট করার ফাংশন
+    window.removePost = async (id) => {
+        if(confirm("আপনি কি নিশ্চিতভাবে এই আর্টিকেলটি মুছে ফেলতে চান?")) {
+            try {
+                await deleteDoc(doc(db, "posts", id));
+                alert("পোস্টটি সফলভাবে মুছে ফেলা হয়েছে।");
+            } catch (error) {
+                alert("মুছে ফেলা সম্ভব হয়নি।");
+            }
+        }
+    };
+</script>
+
+</body>
+</html>
